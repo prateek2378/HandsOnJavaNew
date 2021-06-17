@@ -23,16 +23,6 @@ public class Record {
         noOfEmployees = 0;
     }
 
-    public int getNoOfEmployees(){
-        return(noOfEmployees);
-    }
-    public List<Integer> getEmployeeIDS(){
-        return employeeIDs;
-    }
-    public List<Employee> getEmployee(){
-        return employee;
-    }
-
     private String printEmployee(Employee newEmployee){
         String stringEmployee = "{";
         stringEmployee = stringEmployee.concat("ID: ");
@@ -137,6 +127,9 @@ public class Record {
         newManager.setReportees(newReportees);
     }
 
+    public int getNoOfEmployees(){
+        return(noOfEmployees);
+    }
     public int addEmployee(int newID, String newName, Address newAddress, ContactInformation newContactInformation, Department newDepartment, double newSalary, String newDesignation, Date newDateOfJoining, List<String> newTechnologies, int newManagerID, List<Employee> newReportees){
         if(validateNewID(newID)){
             if(validateNewManagerID(newManagerID)){
