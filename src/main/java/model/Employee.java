@@ -47,7 +47,7 @@ public class Employee {
     public void setAddress(Address newAddress){
         address.setAddressID(newAddress.getAddressID());
         address.setAddressLine1(newAddress.getAddressLine1());
-        address.setAddressLine1(newAddress.getAddressLine2());
+        address.setAddressLine2(newAddress.getAddressLine2());
         address.setState(newAddress.getState());
         address.setCity(newAddress.getCity());
         address.setLandmark(newAddress.getLandmark());

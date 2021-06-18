@@ -10,7 +10,7 @@ import java.util.*;
 
 public class Test {
     private static int noOfRecords = 0;
-    private static List<Record> records = new ArrayList<Record>();
+    private static List<Record> records = new ArrayList<>();
     private static int activeRecord = -1;
 
     private static void createNewRecord() {
@@ -70,13 +70,11 @@ public class Test {
 
     private static int enterID() {
         System.out.println("Enter ID:");
-        int newID = enterInt();
-        return (newID);
+        return (enterInt());
     }
     private static String enterName() {
         System.out.println("Enter Name:");
-        String newName = enterString();
-        return (newName);
+        return (enterString());
     }
     private static Address enterAddress() {
         System.out.println("Enter Address ID:");
@@ -100,8 +98,7 @@ public class Test {
         System.out.println("Enter Pin:");
         int newPin = enterInt();
 
-        Address newAddress = new Address(newAddressID, newAddressLine1, newAddressLine2, newLandmark, newCity, newState, newPin);
-        return (newAddress);
+        return (new Address(newAddressID, newAddressLine1, newAddressLine2, newLandmark, newCity, newState, newPin));
     }
     private static ContactInformation enterContactInformation() {
         System.out.println("Enter Contact Information ID:");
@@ -113,8 +110,7 @@ public class Test {
         System.out.println("Enter Email ID");
         String newEmailID = enterString();
 
-        ContactInformation newContactInformation = new ContactInformation(newContactInformationID, newPhoneNo, newEmailID);
-        return (newContactInformation);
+        return (new ContactInformation(newContactInformationID, newPhoneNo, newEmailID));
     }
     private static Department enterDepartment() {
         System.out.println("Enter Department ID:");
@@ -123,21 +119,18 @@ public class Test {
         System.out.println("Enter Department Name");
         String newDepartmentName = enterString();
 
-        Department newDepartment = new Department(newDepartmentID, newDepartmentName);
-        return (newDepartment);
+        return (new Department(newDepartmentID, newDepartmentName));
     }
     private static double enterSalary() {
         System.out.println("Enter Salary:");
-        double newSalary = enterDouble();
-        return (newSalary);
+        return (enterDouble());
     }
     private static String enterDesignation() {
         System.out.println("Enter Designation");
-        String newDesignation = enterString();
-        return (newDesignation);
+        return (enterString());
     }
     private static Date enterDateOfJoining() throws ParseException {
-        System.out.println("Enter date of joining in dd/mm/yyyy format(Default is \'01/01/2021\' if incorrect date is entered)");
+        System.out.println("Enter date of joining in dd/mm/yyyy format(Default is '01/01/2021' if incorrect date is entered)");
         String stringDate = enterString();
         Date newDateOfJoining = new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2021");
         try {
@@ -148,8 +141,8 @@ public class Test {
         return (newDateOfJoining);
     }
     private static List<String> enterTechnologies() {
-        System.out.println("Enter technologies (enter \'end\' to end entering technologies):");
-        List<String> newTechnologies = new ArrayList<String>();
+        System.out.println("Enter technologies (enter 'end' to end entering technologies):");
+        List<String> newTechnologies = new ArrayList<>();
         while (true) {
             String temp = enterString();
             temp = temp.toLowerCase();
@@ -167,8 +160,7 @@ public class Test {
     }
     private static int enterManagerID() {
         System.out.println("Enter Manager ID:");
-        int newManagerID = enterInt();
-        return (newManagerID);
+        return (enterInt());
     }
 
     private static void printMenu2() {
@@ -307,7 +299,7 @@ public class Test {
             }
             List<String> newTechnologies = enterTechnologies();
             int newManagerID = enterManagerID();
-            List<Employee> newReportees = new ArrayList<Employee>();
+            List<Employee> newReportees = new ArrayList<>();
 
             int outcome = newRecord.addEmployee(newID, newName, newAddress, newContactInformation, newDepartment, newSalary, newDesignation, newDateOfJoining, newTechnologies, newManagerID, newReportees);
             switch(outcome){
@@ -327,12 +319,7 @@ public class Test {
         System.out.println("Enter Employee ID");
         int newID = enterInt();
         String details = newRecord.getDetails(newID);
-        if(details == null){
-            System.out.println("No such Employee in record");
-        }
-        else{
-            System.out.println(details);
-        }
+        System.out.println(Objects.requireNonNullElse(details, "No such Employee in record"));
     }
     private static void getAllDetails(Record newRecord){
         List<String> allDetails = newRecord.getAllDetails();

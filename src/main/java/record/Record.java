@@ -5,12 +5,9 @@ import model.ContactInformation;
 import model.Department;
 import model.Employee;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
 
 public class Record {
     private List<Employee> employee;
@@ -18,8 +15,8 @@ public class Record {
     private int noOfEmployees;
 
     public Record(){
-        employee = new ArrayList<Employee>();
-        employeeIDs = new ArrayList<Integer>();
+        employee = new ArrayList<>();
+        employeeIDs = new ArrayList<>();
         noOfEmployees = 0;
     }
 
@@ -58,7 +55,7 @@ public class Record {
         }
         stringEmployee = stringEmployee.concat("}");
 
-        return(stringEmployee);
+        return stringEmployee;
     }
     private String printDepartment(Department newDepartment){
         String stringDepartment = "{";
@@ -68,7 +65,7 @@ public class Record {
         stringDepartment = stringDepartment.concat(newDepartment.getDepartmentName());
         stringDepartment = stringDepartment.concat("}");
 
-        return(stringDepartment);
+        return stringDepartment;
     }
     private String printContactInformation(ContactInformation newContactInformation){
         String stringContactInformation = "{";
@@ -80,7 +77,7 @@ public class Record {
         stringContactInformation = stringContactInformation.concat(newContactInformation.getEmailID());
         stringContactInformation = stringContactInformation.concat("}");
 
-        return(stringContactInformation);
+        return stringContactInformation;
     }
     private String printAddress(Address newAddress){
         String stringAddress = "{";
@@ -100,26 +97,17 @@ public class Record {
         stringAddress = stringAddress.concat(String.valueOf(newAddress.getPin()));
         stringAddress = stringAddress.concat("}");
 
-        return(stringAddress);
+        return stringAddress;
     }
 
     private boolean validateNewID(int newID){
-        if(newID==-1 || employeeIDs.contains(newID)){
-            return false;
-        }
-        return true;
+        return newID != -1 && !employeeIDs.contains(newID);
     }
     private boolean validateNewManagerID(int newManagerID){
-        if(!employeeIDs.contains(newManagerID) && newManagerID!=-1){
-            return false;
-        }
-        return true;
+        return employeeIDs.contains(newManagerID) || newManagerID == -1;
     }
     private boolean validateID(int newID){
-        if(employeeIDs.contains(newID)){
-            return true;
-        }
-        return false;
+        return employeeIDs.contains(newID);
     }
     private void addReportees(Employee newManager, Employee newEmployee){
         List<Employee> newReportees = newManager.getReportees();
@@ -127,8 +115,15 @@ public class Record {
         newManager.setReportees(newReportees);
     }
 
+    public Employee getEmployee(int newID){
+        if(validateID(newID)){
+            int indexOfEmployee = employeeIDs.indexOf(newID);
+            return(employee.get(indexOfEmployee));
+        }
+        return(null);
+    }
     public int getNoOfEmployees(){
-        return(noOfEmployees);
+        return noOfEmployees;
     }
     public int addEmployee(int newID, String newName, Address newAddress, ContactInformation newContactInformation, Department newDepartment, double newSalary, String newDesignation, Date newDateOfJoining, List<String> newTechnologies, int newManagerID, List<Employee> newReportees){
         if(validateNewID(newID)){
@@ -139,17 +134,14 @@ public class Record {
                     Employee newEmployee = new Employee(newID, newName, newAddress, newContactInformation, newDepartment, newSalary, newDesignation, newDateOfJoining, newTechnologies, newManager, newReportees);
                     addReportees(newManager, newEmployee);
                     employee.add(newEmployee);
-                    employeeIDs.add(newID);
-                    noOfEmployees++;
-                    return 2;
                 }
                 else{
                     Employee newEmployee = new Employee(newID, newName, newAddress, newContactInformation, newDepartment, newSalary, newDesignation, newDateOfJoining, newTechnologies, null, newReportees);
                     employee.add(newEmployee);
-                    employeeIDs.add(newID);
-                    noOfEmployees++;
-                    return 2;
                 }
+                employeeIDs.add(newID);
+                noOfEmployees++;
+                return 2;
             }
             else{
                 return 1;
@@ -171,7 +163,7 @@ public class Record {
         }
     }
     public List<String> getAllDetails(){
-        List<String> allDetails = new ArrayList<String>();
+        List<String> allDetails = new ArrayList<>();
         for(Employee itr: employee){
             allDetails.add(getDetails(itr.getID()));
         }
